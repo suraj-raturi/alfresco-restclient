@@ -19,4 +19,6 @@ Pooling connection parameters
 ```
 alfcli-max-total=20
 alfcli-default-max-per-route=2
+alfcli-sock-timeout=100 in seconds
+alfcli-conn-timeout=10 in seconds
 ```
