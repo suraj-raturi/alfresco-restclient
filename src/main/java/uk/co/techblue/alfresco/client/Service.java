@@ -122,7 +122,11 @@ public abstract class Service<R extends Resource> {
      */
     private final <T> T getClientService(final Class<T> clazz,
         final String serverUri) {
-        logger.info("Generating REST resource proxy for: " + clazz.getName() + " with socket timeout as: ");
+        int httpSocketTimeout = NumberUtils.toInt(System.getProperty("alfcli-sock-timeout"));
+        httpSocketTimeout = httpSocketTimeout == 0 ? HTTP_SOCKET_TIMEOUT : (httpSocketTimeout * 1000);
+        int httpConnTimeout = NumberUtils.toInt(System.getProperty("alfcli-conn-timeout"));
+        httpConnTimeout = httpConnTimeout == 0 ? HTTP_CONNECTION_TIMEOUT : (httpConnTimeout * 1000);
+        logger.info("Generating REST resource proxy for: " + clazz.getName() + " with socket timeout as: "+(httpSocketTimeout/1000)+"s and connection timeout as: "+(httpConnTimeout/1000)+"s");
         final PoolingClientConnectionManager poolingClientConnectionManager = new PoolingClientConnectionManager();
         final int maxTotal = NumberUtils.toInt(System.getProperty("alfcli-max-total", "20"));
         final int defaultMaxPerRoute = NumberUtils.toInt(System.getProperty("alfcli-default-max-per-route", "2"));
@@ -130,8 +134,8 @@ public abstract class Service<R extends Resource> {
         poolingClientConnectionManager.setMaxTotal(maxTotal);
         poolingClientConnectionManager.setDefaultMaxPerRoute(defaultMaxPerRoute);
         final HttpClient httpClient = new DefaultHttpClient(poolingClientConnectionManager);
-        httpClient.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, HTTP_SOCKET_TIMEOUT);
-        httpClient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT, HTTP_CONNECTION_TIMEOUT);
+        httpClient.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, httpSocketTimeout);
+        httpClient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT, httpConnTimeout);
         final ClientExecutor clientExecutor = new ApacheHttpClient4Executor(httpClient);
         
         return ProxyFactory.create(clazz, serverUri, clientExecutor);
