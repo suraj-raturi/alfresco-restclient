@@ -39,7 +39,10 @@ public class UnquoteCharacterEscapeDeserializer extends JsonDeserializer<Map<Str
      */
     @Override
     public Map<String, String> deserialize(final JsonParser jsonparser, final DeserializationContext ctxt) throws IOException {
-        return jsonparser.configure(Feature.ALLOW_UNQUOTED_CONTROL_CHARS, true).readValueAs(new TypeReference<Map<String, String>>() {
+        jsonparser.configure(Feature.ALLOW_UNQUOTED_CONTROL_CHARS, true);
+        jsonparser.configure(Feature.ALLOW_BACKSLASH_ESCAPING_ANY_CHARACTER, true);
+        jsonparser.configure(Feature.ALLOW_SINGLE_QUOTES, true);
+        return jsonparser.readValueAs(new TypeReference<Map<String, String>>() {
         });
     }
 
