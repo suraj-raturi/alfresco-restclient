@@ -114,12 +114,12 @@ public class ContentService extends AbstractService<ContentResource> {
     /**
      * Search.
      * 
-     * @param searchReuqest the search reuqest
+     * @param searchRequest the search reuqest
      * @return the list
      * @throws SearchException the search exception
      */
-    public List<ContentNode> search(final SearchRequest searchReuqest) throws SearchException {
-        final ClientResponse<List<ContentNode>> searchResponse = resourceProxy.advancedSearch(authTicket, searchReuqest);
+    public List<ContentNode> search(final SearchRequest searchRequest) throws SearchException {
+        final ClientResponse<List<ContentNode>> searchResponse = resourceProxy.advancedSearch(authTicket, searchRequest);
         return parseEntityFromResponse(searchResponse, SearchException.class);
     }
 

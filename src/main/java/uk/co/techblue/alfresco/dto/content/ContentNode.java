@@ -17,6 +17,7 @@ package uk.co.techblue.alfresco.dto.content;
 
 import java.util.Map;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.annotate.JsonProperty;
 import org.codehaus.jackson.map.annotate.JsonDeserialize;
 
@@ -99,6 +100,10 @@ public class ContentNode extends BaseDto {
     @JsonProperty("metadata")
     @JsonDeserialize(using = UnquoteCharacterEscapeDeserializer.class)
     private Map<String, String> metadata;
+
+    /** The is soap request. */
+    @JsonIgnore
+    private boolean isSoapRequest;
 
     /**
      * Gets the node id.
@@ -417,6 +422,24 @@ public class ContentNode extends BaseDto {
      */
     public void setSize(final String size) {
         this.size = size;
+    }
+
+    /**
+     * Checks if is soap request.
+     *
+     * @return true, if is soap request
+     */
+    public boolean isSoapRequest() {
+        return isSoapRequest;
+    }
+
+    /**
+     * Sets the soap request.
+     *
+     * @param isSoapRequest the new soap request
+     */
+    public void setSoapRequest(boolean isSoapRequest) {
+        this.isSoapRequest = isSoapRequest;
     }
 
 }

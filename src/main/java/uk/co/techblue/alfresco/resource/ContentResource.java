@@ -110,7 +110,7 @@ public interface ContentResource extends Resource {
      * Advanced search.
      * 
      * @param ticket the ticket
-     * @param searchReuqest the search reuqest
+     * @param searchRequest the search reuqest
      * @return the client response
      */
     @POST
@@ -118,7 +118,7 @@ public interface ContentResource extends Resource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     ClientResponse<List<ContentNode>> advancedSearch(@QueryParam(AlfrescoConstants.AUTH_TICKET_PARAM_NAME) String ticket,
-        SearchRequest searchReuqest);
+        SearchRequest searchRequest);
 
     /**
      * Delete document.
